@@ -12,6 +12,13 @@ const getRandomValue = (values) => {
 
 const getBreeds = () => {
   // implement me!
+  return axios.get("https://dog.ceo/api/breeds/list/all")
+  .then(response=> {
+    return Object.keys(response.data.message);
+  })
+  .catch(error=> {
+    console.log(error);
+  });
 };
 
 // Helper method to retrieve a random image for a
@@ -22,6 +29,13 @@ const getBreeds = () => {
 
 const getRandomImageForBreed = (breed) => {
   // implement me!
+  return axios.get(`https://dog.ceo/api/breed/${breed}/images/random`)
+  .then(response=> {
+    return response.data.message;
+  })
+  .catch(error=> {
+    console.log(error);
+  });
 };
 
 // use our other helpers to make a function that returns
@@ -30,6 +44,14 @@ const getRandomImageForBreed = (breed) => {
 
 const getRandomDogImage = () => {
   // implement me!
+ 
+
+  return getBreeds()
+  .then((breeds) =>{
+    const randomeBreed = getRandomValue(breeds);
+    return getRandomImageForBreed(randomeBreed);
+})
+  .catch((error) => {console.log(error)});
 };
 
 // This is the call we would like to make work
@@ -38,3 +60,4 @@ getRandomDogImage()
   .then(url => {
     console.log(url);
   });
+
